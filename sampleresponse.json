@@ -1,0 +1,9 @@
+[
+    8,
+    "OnJsonApiEvent",
+    {
+        "data": { },
+        "eventType": "Update",
+        "uri": "/"
+    }
+]
