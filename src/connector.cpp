@@ -1,6 +1,6 @@
 #include "include/connector.hpp"
-#include "socket.hpp"
+#include "client.hpp"
 
 void connector::CreateConnection() {
-    socket123::Test("ws://127.0.0.1:52335");
+    client::Init({ .m_username = "riot", .m_password = "", .m_port = "" });
 }

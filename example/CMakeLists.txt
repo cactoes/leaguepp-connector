@@ -19,7 +19,7 @@ target_link_libraries(${EXAMPLE_PROJECT_NAME} PRIVATE OpenSSL::SSL)
 # ================
 set(Boost_USE_STATIC_LIBS TRUE)
 add_definitions("-D_WEBSOCKETPP_CPP11_STL_")
-find_package(Boost REQUIRED COMPONENTS filesystem system)
+find_package(Boost REQUIRED COMPONENTS system)
 target_include_directories(${EXAMPLE_PROJECT_NAME} PRIVATE Boost::headers)
 target_link_libraries(${EXAMPLE_PROJECT_NAME} PRIVATE Boost::system)
 
