@@ -12,22 +12,71 @@ void httpclient::Destroy() {
     g_client = nullptr;
 }
 
-int httpclient::MakeRequest(const request_type type, const std::string &endpoint, nlohmann::json& out, const std::string& in) {
+int httpclient::GetRequest(const std::string &endpoint, nlohmann::json& out) {
     if (!g_client)
         return -1;
 
-    httplib::Result result;
+    httplib::Result result = g_client->Get(endpoint);
 
-    switch (type) {
-        case request_type::PUT:     result = g_client->Put(endpoint, in, "application/json"); break;
-        case request_type::POST:    result = g_client->Post(endpoint, in, "application/json"); break;
-        case request_type::PATCH:   result = g_client->Patch(endpoint, in, "application/json"); break;
-        case request_type::DEL:     result = g_client->Delete(endpoint, in, "application/json"); break;
-        case request_type::GET:
-        default:
-            result = g_client->Get(endpoint);
-            break;
-    }
+    if (!result)
+        return 0;
+
+    // false, disable exceptions
+    out = nlohmann::json::parse(result->body, nullptr, false);
+
+    return result->status;
+}
+
+int httpclient::PutRequest(const std::string &endpoint, nlohmann::json& out, const std::string& in) {
+    if (!g_client)
+        return -1;
+
+    httplib::Result result = g_client->Put(endpoint, in, "application/json");
+
+    if (!result)
+        return 0;
+
+    // false, disable exceptions
+    out = nlohmann::json::parse(result->body, nullptr, false);
+
+    return result->status;
+}
+
+int httpclient::PostRequest(const std::string &endpoint, nlohmann::json& out, const std::string& in) {
+    if (!g_client)
+        return -1;
+
+    httplib::Result result = g_client->Post(endpoint, in, "application/json");
+
+    if (!result)
+        return 0;
+
+    // false, disable exceptions
+    out = nlohmann::json::parse(result->body, nullptr, false);
+
+    return result->status;
+}
+
+int httpclient::PatchRequest(const std::string &endpoint, nlohmann::json& out, const std::string& in) {
+    if (!g_client)
+        return -1;
+
+    httplib::Result result = g_client->Patch(endpoint, in, "application/json");
+
+    if (!result)
+        return 0;
+
+    // false, disable exceptions
+    out = nlohmann::json::parse(result->body, nullptr, false);
+
+    return result->status;
+}
+
+int httpclient::DeleteRequest(const std::string &endpoint, nlohmann::json& out, const std::string& in) {
+    if (!g_client)
+        return -1;
+
+    httplib::Result result = g_client->Patch(endpoint, in, "application/json");
 
     if (!result)
         return 0;

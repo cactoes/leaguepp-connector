@@ -26,7 +26,11 @@ namespace httpclient {
     void CreateClient(const riot::lock_file_t& lockFile);
     void Destroy();
 
-    int MakeRequest(const request_type type, const std::string& endpoint, nlohmann::json& out, const std::string& in = "");
+    int GetRequest(const std::string& endpoint, nlohmann::json& out);
+    int PutRequest(const std::string& endpoint, nlohmann::json& out, const std::string& in = "");
+    int PostRequest(const std::string& endpoint, nlohmann::json& out, const std::string& in = "");
+    int PatchRequest(const std::string& endpoint, nlohmann::json& out, const std::string& in = "");
+    int DeleteRequest(const std::string& endpoint, nlohmann::json& out, const std::string& in = "");
 }; // namespace httpclient
 
 #endif // __HTTPCLIENT_HPP__
