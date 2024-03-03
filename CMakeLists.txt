@@ -29,4 +29,4 @@ target_include_directories(${PROJECT_NAME} INTERFACE lib/websocketpp)
 target_include_directories(${PROJECT_NAME} INTERFACE lib/json/single_include)
 
 # enable to build the example
-add_subdirectory(example)
+# add_subdirectory(example)
