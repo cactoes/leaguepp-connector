@@ -23,5 +23,10 @@ target_include_directories(${PROJECT_NAME} INTERFACE lib/cpp-httplib)
 # ================
 target_include_directories(${PROJECT_NAME} INTERFACE lib/websocketpp)
 
+# ================
+# submodule: json
+# ================
+target_include_directories(${PROJECT_NAME} INTERFACE lib/json/single_include)
+
 # enable to build the example
 add_subdirectory(example)

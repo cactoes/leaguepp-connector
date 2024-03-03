@@ -4,3 +4,6 @@
 [submodule "lib/websocketpp"]
 	path = lib/websocketpp
 	url = https://github.com/zaphoyd/websocketpp
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json.git
