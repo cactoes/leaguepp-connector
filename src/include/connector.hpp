@@ -21,6 +21,19 @@ namespace connector {
         std::function<void(void)> disconnectHandler = nullptr;
     };
 
+    enum class request_type {
+        GET = 0,
+        PUT,
+        POST,
+        PATCH,
+        DEL
+    };
+
+    struct result_t {
+        int status;
+        nlohmann::json data;
+    };
+
     // non-blocking. setup the connection to the client.
     // this function will block until the client is opened
     void Connect(const config_t& config);
@@ -30,6 +43,9 @@ namespace connector {
 
     // std::bind(&CLASSNAME::FUNCTION, &INSTANCE, std::placeholder::_N)
     void AddEventHandler(const std::string& endpoint, std::function<void(nlohmann::json)> listener);
+
+    // data is optional and only used when sending data to the client
+    result_t MakeRequest(request_type type, const std::string& endpoint, const std::string& data = "");
 }; // namespace connector
 
 #endif // __CONNECTOR_HPP__

@@ -69,7 +69,7 @@ void ConnectionWatcher() {
 
         // connect
         nlohmann::json tmp;
-        if (httpclient::MakeRequest(httpclient::request_type::GET, "/lol-gameflow/v1/gameflow-phase", tmp) == 200)
+        if (httpclient::GetRequest("/lol-gameflow/v1/gameflow-phase", tmp) == 200)
             wsclient::CreateAndStart(&s_lockFile);
 
         SLEEP(1000);
@@ -95,4 +95,31 @@ void connector::Disconnect() {
 
 void connector::AddEventHandler(const std::string& endpoint, std::function<void(nlohmann::json)> listener) {
     g_handlers.m_eventHandlers[endpoint].push_back(listener);
+}
+
+connector::result_t connector::MakeRequest(request_type type, const std::string& endpoint, const std::string& data) {
+    connector::result_t result = {};
+
+    switch (type) {
+        case request_type::GET:
+            result.status = httpclient::GetRequest(endpoint, result.data);
+            break;
+        case request_type::PUT:
+            result.status = httpclient::PutRequest(endpoint, result.data, data);
+            break;
+        case request_type::POST:
+            result.status = httpclient::PostRequest(endpoint, result.data, data);
+            break;
+        case request_type::PATCH:
+            result.status = httpclient::PatchRequest(endpoint, result.data, data);
+            break;
+        case request_type::DEL:
+            result.status = httpclient::DeleteRequest(endpoint, result.data, data);
+            break;
+        default:
+            result.status = -1;
+            break;
+    }
+
+    return result;
 }
