@@ -1,5 +1,5 @@
 ## league++connector
-A league of legends client api connector
+A league of legends client api connector, using websockets
 
 > [!NOTE]  
 > Windows only since league is windows only
