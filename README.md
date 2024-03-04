@@ -1,14 +1,16 @@
 ## league++connector
-a league of legends client connector written in c++20
+a league of legends client connector written in c++20.
+
+this library makes use of [nlohmann/json](https://github.com/nlohmann/json) for the json side of things.
 
 > [!NOTE]
-> windows only since league is windows only
+> windows only since league is windows only.
 
 ## examples
 here is an full [example](example/src/main) of the library.
 
 ### connecting to the client
-the header file exposes a function to connect to the client which takes in a config
+the header file exposes a function to connect to the client which takes in a config.
 ```cpp
 #include <connector.hpp>
 //...
@@ -26,10 +28,9 @@ connector::Connect(config);
 ```
 
 ### adding event handlers
-to listen to events you'll need to pass the endpoint uri & an handler
+to listen to events you'll need to pass the endpoint uri & an handler.
 ```cpp
 #include <connector.hpp>
-#include <nlohmann/json.hpp>
 // ...
 
 // this is what a handler looks like. always void(json)
@@ -42,7 +43,6 @@ while this list is outdated a lot of events are listed [here](https://lcu.vivide
 ### making requests to the client
 ```cpp
 #include <connector.hpp>
-#include <nlohmann/json.hpp>
 // ...
 
 auto result = connector::MakeRequest(connector::request_type::POST, "/uri", "\"EXTRA_JSON_DATA_HERE (if needed)\"");
@@ -80,7 +80,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE leaguepp_connector)
 ```
 
 ## prerequisites
-these are required development packages that need to be properly installed on your system
+these are required development packages that need to be properly installed on your system.
 * `openssl` (v3) (https://www.openssl.org/)
 * `boost` (> v1.84.0) (https://www.boost.org/)
 
