@@ -7,7 +7,7 @@ this library makes use of [nlohmann/json](https://github.com/nlohmann/json) for 
 > windows only since league is windows only.
 
 ## examples
-here is an full [example](example/src/main) of the library.
+here is an full [example](example/src/main.cpp) of the library.
 
 ### connecting to the client
 the header file exposes a function to connect to the client which takes in a config.
