@@ -8,6 +8,7 @@ add_executable(${EXAMPLE_PROJECT_NAME} ${EXAMPLE_SOURCE_FILES})
 
 # ================
 # library: OpenSSL (v3)
+# note: required for cpp-httplib
 # ================
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)

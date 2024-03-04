@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(league__connector)
+project(leaguepp_connector)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,7 +14,7 @@ target_sources(${PROJECT_NAME} INTERFACE ${SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} INTERFACE src/include)
 
 # ================
-# submodule: cpp httplib
+# submodule: cpp-httplib
 # ================
 target_include_directories(${PROJECT_NAME} INTERFACE lib/cpp-httplib)
 
