@@ -22,6 +22,8 @@ config.enableWebSocketLogging = false;
 // set function pointers to handlers for connect & disconnect events
 config.connectHandler = &ConnectHandler;
 config.disconnectHandler = &DisconnectHandler;
+// after how many ms should the connector try again to connect
+config.reconnectInterval = 1000;
 
 // connect to the client using our config
 connector::Connect(config);

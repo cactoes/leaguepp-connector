@@ -32,6 +32,7 @@ int main() {
     config.enableWebSocketLogging = false;
     config.connectHandler = &ConnectHandler;
     config.disconnectHandler = &DisconnectHandler;
+    config.reconnectInterval = 1000;
 
     GameFlowHandler handler = GameFlowHandler();
     connector::AddEventHandler("/lol-gameflow/v1/gameflow-phase",

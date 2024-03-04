@@ -7,18 +7,11 @@
 #include <nlohmann/json.hpp>
 
 namespace connector {
-    enum connection_state {
-        NONE = 0,
-        DISCONNECTED,
-        NOCLIENT,
-        READY,
-        CONNECTED
-    };
-
     struct config_t {
         bool enableWebSocketLogging = false;
         std::function<void(void)> connectHandler = nullptr;
         std::function<void(void)> disconnectHandler = nullptr;
+        int reconnectInterval = 1000;
     };
 
     enum class request_type {
