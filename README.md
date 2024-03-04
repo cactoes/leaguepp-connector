@@ -56,6 +56,7 @@ if (result.status != 200) {
 ```
 
 ## including
+make sure to use the `--recursive` flag when cloning this repository
 ```cmake
 # ================
 # library: OpenSSL (v3)
@@ -78,6 +79,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Boost::system)
 # ================
 # library: league++connector
 # ================
+add_subdirectory(PATH_TO_THIS_LIBRARY)
 target_link_libraries(${PROJECT_NAME} PRIVATE leaguepp_connector)
 ```
 
