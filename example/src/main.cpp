@@ -1,12 +1,19 @@
-#include <Windows.h>
-
+// the library
 #include <connector.hpp>
-
+// for GetAsyncKeyState
+#include <Windows.h>
+// cout
 #include <iostream>
+// sleeping
 #include <thread>
 
 void ConnectHandler() {
     std::cout << "on connect event\n";
+    auto result = connector::MakeRequest(connector::request_type::GET, "/lol-gameflow/v1/gameflow-phase");
+
+    if (result.status == 200) {
+        std::cout << "current gameflow: " << result.data.get<std::string>() << "\n";
+    }
 }
 
 void DisconnectHandler() {
