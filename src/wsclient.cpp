@@ -4,11 +4,7 @@
 #include <thread>
 #include <memory>
 
-#ifdef _DEBUG
-    #define DBG_LOG(...) std::cout << __VA_ARGS__ << "\n"
-#else
-    #define DBG_LOG(...)
-#endif
+#define DBG_LOG(...) if (g_enableWSLogging) std::cout << __VA_ARGS__ << "\n"
 
 wsclient::client_handlers_t g_handlers = {};
 bool g_enableWSLogging = true;
