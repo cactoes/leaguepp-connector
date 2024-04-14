@@ -35,7 +35,7 @@ namespace connector {
     void Disconnect();
 
     // std::bind(&CLASSNAME::FUNCTION, &INSTANCE, std::placeholder::_N)
-    void AddEventHandler(const std::string& endpoint, std::function<void(nlohmann::json)> listener);
+    void AddEventHandler(const std::string& endpoint, std::function<void(std::string, nlohmann::json)> listener);
 
     // data is optional and only used when sending data to the client
     result_t MakeRequest(request_type type, const std::string& endpoint, const std::string& data = "");

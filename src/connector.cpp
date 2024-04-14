@@ -19,7 +19,7 @@ int g_reconnectInterval;
 struct handlers_t {
     std::function<void(void)> connect = nullptr;
     std::function<void(void)> disconnect = nullptr;
-    std::unordered_map<std::string, std::vector<std::function<void(nlohmann::json)>>> eventHandlers;
+    std::unordered_map<std::string, std::vector<std::function<void(std::string, nlohmann::json)>>> eventHandlers;
 } g_handlers;
 
 #define SLEEP(x) std::this_thread::sleep_for(std::chrono::milliseconds(x))
@@ -46,9 +46,13 @@ void ConnectionWatcher() {
     });
 
     wsclient::SetMessageHandler([](const std::string& uri, const nlohmann::json& data) {
+        if (g_handlers.eventHandlers.contains("*"))
+            for (const auto listener : g_handlers.eventHandlers.at("*"))
+                listener(uri, data);
+
         if (g_handlers.eventHandlers.contains(uri))
             for (const auto listener : g_handlers.eventHandlers.at(uri))
-                listener(data);
+                listener(uri, data);
     });
 
     while (g_keepAlive) {
@@ -91,7 +95,7 @@ void connector::Disconnect() {
     g_connectionThread.join();
 }
 
-void connector::AddEventHandler(const std::string& endpoint, std::function<void(nlohmann::json)> listener) {
+void connector::AddEventHandler(const std::string& endpoint, std::function<void(std::string, nlohmann::json)> listener) {
     g_handlers.eventHandlers[endpoint].push_back(listener);
 }
 

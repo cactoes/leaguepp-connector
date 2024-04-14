@@ -22,10 +22,14 @@ void DisconnectHandler() {
 
 class GameFlowHandler {
 public:
-    void OnNewGameFlow(nlohmann::json data) {
+    void OnNewGameFlow(std::string uri, nlohmann::json data) {
         std::cout << "current gameflow: " + data.get<std::string>() << "\n";
     }
 };
+
+void OnAnyEndpoint(std::string uri, nlohmann::json data) {
+    std::cout << uri + " " + data.dump() << "\n";
+}
 
 int main() {
     connector::config_t config = {};
@@ -36,7 +40,9 @@ int main() {
 
     GameFlowHandler handler = GameFlowHandler();
     connector::AddEventHandler("/lol-gameflow/v1/gameflow-phase",
-        std::bind(&GameFlowHandler::OnNewGameFlow, &handler, std::placeholders::_1));
+        std::bind(&GameFlowHandler::OnNewGameFlow, &handler, std::placeholders::_1, std::placeholders::_2));
+
+    connector::AddEventHandler("*", &OnAnyEndpoint);
 
     connector::Connect(config);
 

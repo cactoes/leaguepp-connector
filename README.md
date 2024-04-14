@@ -35,8 +35,8 @@ to listen to events you'll need to pass the endpoint uri & an handler.
 #include <connector.hpp>
 // ...
 
-// this is what a handler looks like. always void(json)
-void OnClientEvent(nlohmann::json data) { /* ... */ }
+// this is what a handler looks like. always void(string, json)
+void OnClientEvent(std::string uri, nlohmann::json data) { /* ... */ }
 
 connector::AddEventHandler("/event/you-want-to-listen/to", &OnClientEvent)
 ```
