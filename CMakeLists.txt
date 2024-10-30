@@ -1,32 +1,33 @@
 cmake_minimum_required(VERSION 3.20)
 project(leaguepp_connector)
 
+# ~~ c++ config stuff
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# ================
-# main library
-# ================
-file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*)
-add_library(${PROJECT_NAME} INTERFACE)
-target_sources(${PROJECT_NAME} INTERFACE ${SOURCE_FILES})
-target_include_directories(${PROJECT_NAME} INTERFACE src/include)
+# ~~ global cmake vars
 
-# ================
-# submodule: cpp-httplib
-# ================
-target_include_directories(${PROJECT_NAME} INTERFACE lib/cpp-httplib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
-# ================
-# submodule: WebSocket++
-# ================
-target_include_directories(${PROJECT_NAME} INTERFACE lib/websocketpp)
+option(BUILD_EXAMPLE "build example" ON)
 
-# ================
-# submodule: json
-# ================
-target_include_directories(${PROJECT_NAME} INTERFACE lib/json/single_include)
+# -- compiler stuff
 
-# enable to build the example
-# add_subdirectory(example)
+if (MSVC)
+    set(CUSTOM_COMPILE_OPTIONS
+        /W4 /D "_MBCS" /MP /Zc:__cplusplus /bigobj)
+else()
+    set(CUSTOM_COMPILE_OPTIONS
+        -Wall -Wextra -D "_MBCS")
+endif()
+
+# ~~ projects
+
+add_subdirectory(src/connector)
+
+if (BUILD_EXAMPLE)
+    add_subdirectory(src/example)
+endif()

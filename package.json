@@ -1,0 +1,15 @@
+{
+  "name": "league++connector",
+  "module": "build_package.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1"
+  }
+}

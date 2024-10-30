@@ -1,94 +1,57 @@
 ## league++connector
-a league of legends client connector written in c++20.
-
-this library makes use of [nlohmann/json](https://github.com/nlohmann/json) for the json side of things.
+A league of legends client connector written in c++20.
 
 > [!NOTE]
-> windows only since league is windows only.
+> Windows only since league is windows only.
 
-## examples
-here is an full [example](example/src/main.cpp) of the library.
+## Examples
+Here is an full [example](src/example/src/main.cpp) of the library.
 
-### connecting to the client
-the header file exposes a function to connect to the client which takes in a config.
+### Connecting to the client
+The header file exposes a function to connect to the client which takes in a config.
 ```cpp
 #include <connector.hpp>
 //...
 
 // setup the config
-connector::config_t config = {};
-// enabling this will enable debugging for WebSocket++
-config.enableWebSocketLogging = false;
-// set function pointers to handlers for connect & disconnect events
-config.connectHandler = &ConnectHandler;
-config.disconnectHandler = &DisconnectHandler;
-// after how many ms should the connector try again to connect
-config.reconnectInterval = 1000;
+connector::settings_t settings = {};
+config.reconnect_interval = 1000;
 
 // connect to the client using our config
-connector::Connect(config);
+connector::connector client(settings);
 ```
 
-### adding event handlers
+### Adding event handlers
 to listen to events you'll need to pass the endpoint uri & an handler.
 ```cpp
-#include <connector.hpp>
-// ...
+// this is what a handler looks like. always void(string, string)
+void on_client_event(std::string uri, std::string data);
 
-// this is what a handler looks like. always void(string, json)
-void OnClientEvent(std::string uri, nlohmann::json data) { /* ... */ }
-
-connector::AddEventHandler("/event/you-want-to-listen/to", &OnClientEvent)
+client.add_event_listener("/event/you-want-to-listen/to", &on_client_event)
 ```
-while this list is outdated a lot of events are listed [here](https://lcu.vivide.re/) (for Client Version: 8.24)
+While this list is outdated a lot of events are listed [here](https://lcu.vivide.re/) (for Client Version: 8.24)
 
-### making requests to the client
+### Making requests to the client
 ```cpp
-#include <connector.hpp>
-// ...
-
-auto result = connector::MakeRequest(connector::request_type::POST, "/uri", "\"EXTRA_JSON_DATA_HERE (if needed)\"");
-// result.data will hold a json object of the data
+auto result = client.make_request(connector::request_type::POST, "/uri", "\"EXTRA_JSON_DATA_HERE (if needed)\"");
+// result.data will hold a json object of the data in string format
 // result.status will hold the http status code of the request
-if (result.status != 200) {
+if (result.status != 200)
     std::cout << "request failed\n";
-}
 ```
 
-## including
-make sure to use the `--recursive` flag when cloning this repository
-```cmake
-# ================
-# library: OpenSSL (v3)
-# note: required for cpp-httplib
-# ================
-set(OPENSSL_USE_STATIC_LIBS TRUE)
-find_package(OpenSSL REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenSSL::SSL)
+## Including
+Import the bins in the release & include the header(s) in [connector/include/connector](connector/include/connector)
 
-# ================
-# library: Boost
-# note: required for WebSocket++
-# ================
-set(Boost_USE_STATIC_LIBS TRUE)
-add_definitions("-D_WEBSOCKETPP_CPP11_STL_")
-find_package(Boost REQUIRED COMPONENTS system)
-target_include_directories(${PROJECT_NAME} PRIVATE Boost::headers)
-target_link_libraries(${PROJECT_NAME} PRIVATE Boost::system)
+# Builing form source
+To build from source make sure you have cloned this repository with `--recursive`.
 
-# ================
-# library: league++connector
-# ================
-add_subdirectory(PATH_TO_THIS_LIBRARY)
-target_link_libraries(${PROJECT_NAME} PRIVATE leaguepp_connector)
-```
-
-## prerequisites
-these are required development packages that need to be properly installed on your system.
+## Prerequisites
+These are required development packages that need to be properly installed on your system.
 * `openssl` (v3) (https://www.openssl.org/)
 * `boost` (> v1.84.0) (https://www.boost.org/)
 
-## notes
+# Notes
 this was tested & built using:
 * Microsoft Visual C++ 2022 / Build Tools x64
 * Windows 10
